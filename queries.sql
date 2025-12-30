@@ -37,4 +37,25 @@ VALUES
 ('Yamaha R15', 'bike', '2023', 'GHI-789', '30', 'available'),
 ('Ford F-150', 'truck', '2020', 'JKL-012', '100', 'maintenance');
 
-SELECT * FROM Vehicles
+SELECT * FROM Vehicles;
+
+-- Create BookingStatus type and Booking Table
+CREATE TYPE BookingStatus AS ENUM ('pending', 'confirmed', 'completed', 'cancelled');
+
+CREATE TABLE Bookings (
+    booking_id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL REFERENCES Users(user_id) ON DELETE CASCADE,
+    vehicle_id INT NOT NULL REFERENCES Vehicles(vehicle_id) ON DELETE CASCADE,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    status BookingStatus NOT NULL,
+    total_cost NUMERIC(10,2) NOT NULL CHECK(total_cost >= 0)
+);
+
+INSERT INTO Bookings (user_id, vehicle_id, start_date, end_date, status, total_cost)
+VALUES
+('1', '1', '2023-11-01', '2023-11-03', 'completed', '120'),
+('3', '3', '2023-12-01', '2023-12-02', 'confirmed', '60'),
+('1', '3', '2023-12-10', '2023-12-12', 'pending', '100');
+
+SELECT * FROM Bookings;
