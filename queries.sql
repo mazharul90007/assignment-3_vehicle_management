@@ -59,3 +59,14 @@ VALUES
 ('1', '3', '2023-12-10', '2023-12-12', 'pending', '100');
 
 SELECT * FROM Bookings;
+
+-- Query 2: EXISTS
+SELECT * FROM vehicles v
+WHERE NOT EXISTS(
+    SELECT * FROM bookings b
+    WHERE b.vehicle_id = v.vehicle_id
+);
+
+-- Query 3: WHERE
+SELECT * FROM vehicles
+WHERE "type" = 'car';
