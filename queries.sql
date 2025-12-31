@@ -60,6 +60,12 @@ VALUES
 
 SELECT * FROM Bookings;
 
+-- Query 1: JOIN
+SELECT booking_id, users.name as customer_name, vehicles.name as vehicle_name, start_date, end_date, bookings.status
+FROM bookings
+INNER JOIN users ON bookings.user_id = users.user_id
+INNER JOIN vehicles ON bookings.vehicle_id = vehicles.vehicle_id;
+
 -- Query 2: EXISTS
 SELECT * FROM vehicles v
 WHERE NOT EXISTS(
@@ -70,3 +76,10 @@ WHERE NOT EXISTS(
 -- Query 3: WHERE
 SELECT * FROM vehicles
 WHERE "type" = 'car';
+
+-- Query 4: GROUP BY
+SELECT vehicles.name as vehicle_name, COUNT(bookings.vehicle_id) as total_bookings
+FROM bookings
+INNER JOIN vehicles ON bookings.vehicle_id = vehicles.vehicle_id
+GROUP BY vehicles.vehicle_id
+HAVING COUNT(bookings.vehicle_id) > 2;
