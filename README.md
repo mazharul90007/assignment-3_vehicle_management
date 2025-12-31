@@ -183,14 +183,42 @@ VALUES
 
 1. Retrieve booking information along with Customer name and Vehicle name.
 
-### 1️⃣ EXISTS:
+```sql
+SELECT booking_id, users.name as customer_name, vehicles.name as vehicle_name, start_date, end_date, bookings.status
+FROM bookings
+INNER JOIN users ON bookings.user_id = users.user_id
+INNER JOIN vehicles ON bookings.vehicle_id = vehicles.vehicle_id;
+```
+
+### 2️⃣ EXISTS:
 
 1. Find all vehicles that have never been booked.
 
-### 1️⃣ WHERE:
+```sql
+SELECT * FROM vehicles v
+WHERE NOT EXISTS(
+    SELECT * FROM bookings b
+    WHERE b.vehicle_id = v.vehicle_id
+);
+```
+
+### 3️⃣ WHERE:
 
 1. Retrieve all available vehicles of a specific type (e.g. cars).
 
-### 1️⃣ GROUP BY and HAVING:
+```sql
+SELECT * FROM vehicles
+WHERE "type" = 'car';
+```
+
+### 4️⃣ GROUP BY and HAVING:
 
 1. Find the total number of bookings for each vehicle and display only those vehicles that have more than 2 bookings.
+
+```sql
+SELECT vehicles.name as vehicle_name, COUNT(bookings.vehicle_id) as total_bookings
+FROM bookings
+INNER JOIN vehicles ON bookings.vehicle_id = vehicles.vehicle_id
+GROUP BY vehicles.vehicle_id
+HAVING COUNT(bookings.vehicle_id) > 2;
+```
