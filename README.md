@@ -1,13 +1,13 @@
----
-
 ## 🧱 Vehicle Rental Database Design & SQL Quries
 
 ### Entities
+
 - **Users** – system users (Admin, Customer)
 - **Vehicles** – rentable vehicles
 - **Bookings** – rental records connecting users and vehicles
 
 ### Relationships
+
 - One **User** → many **Bookings**
 - One **Vehicle** → many **Bookings** / many **Bookings** → one **Vehicle**
 
